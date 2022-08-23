@@ -4,4 +4,3 @@ def length(n):
 n=input()
 x=length(n)
 print(x)
-
