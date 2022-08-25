@@ -1,25 +1,13 @@
-import MySQLdb
+import pyodbc
 
-mydb = MySQLdb.connect(
-  host="localhost",
-  user="root",
-  passwd="root",
-  database="python"
-)
+server = 'HYDTRNG19\SQLEXPRSS'
+database = 'Satyam'
+username = 'sa'
+password = 'satya@143'
+cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 
 
-mycursor = mydb.cursor()
-
-# mycursor.execute("CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))")
-sql = "INSERT INTO customer (name, address) VALUES (%s, %s)"
-val = ("gdsgdfgfdg", "Hyd")
-mycursor.execute(sql, val)
-mydb.commit()
-print(mycursor.rowcount, "record inserted.")
-
-mycursor.execute("SELECT * FROM customer")
-myresult = mycursor.fetchall()
-print("Name |  Address")
-for x in myresult:
-  print(x[0] +" | " + x[1])
-  print(type(x))
+mycursor = cnxn.cursor()
+res = mycursor.execute("select * from emp")
+myrecs = res.fetchall();
+print(myrecs)
